@@ -20,3 +20,7 @@ def test_mask_word():
     word = "gangman"
     assert hangman.mask_word(word) == "*******"
 
+def test_mask_word_guessed():
+    word = "greenlight"
+    guessed = "ge"
+    assert hangman.mask(word, gl) == "g*ee******"
