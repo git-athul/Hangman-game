@@ -17,5 +17,6 @@ def test_secret_word_no_proper_nouns():
 
     
 def test_mask_word():
-    word = hangman
+    word = "gangman"
     assert hangman.mask_word(word) == "*******"
+
