@@ -27,3 +27,10 @@ def test_mask_word():
 def test_mask_word_guessed():
     words = ["superman", "kidflash","batgirl"]
     assert [hangman.mask_word(i, i) == i for i in words]
+
+
+def test_mask_word_repetitive():
+    words = ["deadpool", "batman","greenlantern" ]
+    guess = [ "od", "a", "en"]
+    masks = ["d**d*oo*", "**een**n*e*n"]
+    assert all([hangman.mask_word(words,guess) == masks])
