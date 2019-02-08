@@ -15,12 +15,15 @@ def test_secret_word_no_punctuation():
 def test_secret_word_no_proper_nouns():
     assert all(hangman.get_secret_word("./test_data/3.words") == "policeman" for _ in range(100))
 
+
+# 1. Masking entire word when not guessed
+# 2. Unmasking entire word when fully guessed 
     
 def test_mask_word():
     word = "gangman"
-    assert hangman.mask_word(word) == "*******"
+    guess = " "
+    assert hangman.mask_word(word, guess) == "*******"
 
 def test_mask_word_guessed():
-    word = "greenlight"
-    guessed = "ge"
-    assert hangman.mask(word, gl) == "g*ee******"
+    words = ["superman", "kidflash","batgirl"]
+    assert [hangman.mask_word(i, i) == i for i in words]
