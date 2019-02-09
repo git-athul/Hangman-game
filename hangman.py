@@ -46,19 +46,31 @@ def number_of_guesses(guessed):
     
 
 
-print("""
-Welcome to hangman!
-You have to guess the secret word with in 10 tries.
-""")
+# pytest guard
+
+if __name__ == '__main__':
+
+    def rep_guess(rep_guess, guess_list):
+        while set(rep_guess) & set(guess_list) != set():
+            print("Already guessed", rep_guess)
+            rep_guess = input("Enter another guess:")
+        return rep_guess    
 
 
-secret_word = get_secret_word()
-guesslist = ""
-formatter = "Guesses left :{:^3}   Word:{:^15}    Guessed:{:<10}"
+    print("""
+    Welcome to hangman!
+    You have to guess the secret word with in 10 tries.
+    """)
 
 
-for i in range(10):
-    print(formatter.format(10-i, mask_word(secret_word, guesslist), guesslist))
-    newguess = input("Enter next guess: ")
-    guesslist += newguess
+    secret_word = get_secret_word()
+    guesslist = ""
+    formatter = "Guesses left :{:^3}   Word:{:^15}    Guessed:{:<10}"
+
+
+    for i in range(10):
+        print(formatter.format(10-i, mask_word(secret_word, guesslist), guesslist))
+        newguess = input("Enter next guess: ")
+        rep_guess(newguess, guesslist)
+        guesslist += newguess
 
