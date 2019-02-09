@@ -70,7 +70,12 @@ if __name__ == '__main__':
 
     for i in range(10):
         print(formatter.format(10-i, mask_word(secret_word, guesslist), guesslist))
+        if secret_word is mask_word(secret_word, guesslist):
+            print("Congratulations!")
+            break
         newguess = input("Enter next guess: ")
         rep_guess(newguess, guesslist)
         guesslist += newguess
+
+    print(f"Too bad! The secret word was '{secret_word}'")
 
