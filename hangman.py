@@ -43,3 +43,22 @@ def mask_word(s_word,guessed):
 
 def number_of_guesses(guessed):
     return len(guessed)
+    
+
+
+print("""
+Welcome to hangman!
+You have to guess the secret word with in 10 tries.
+""")
+
+
+secret_word = get_secret_word()
+guesslist = ""
+formatter = "Guesses left :{:^3}   Word:{:^15}    Guessed:{:<10}"
+
+
+for i in range(10):
+    print(formatter.format(10-i, mask_word(secret_word, guesslist), guesslist))
+    newguess = input("Enter next guess: ")
+    guesslist += newguess
+
