@@ -1,6 +1,7 @@
 # hangman.py
 
 import random
+import time
 
 def get_secret_word(word_file="/usr/share/dict/words"):
     with open(word_file) as f:
@@ -73,13 +74,13 @@ if __name__ == '__main__':
         while not all(conditions):
             if cond1 is False:
                 print("Enter one letter only.", end=" ")
-            else:    
+            else:
                 if cond2 is False:
                     print(f"Already guessed '{guess}'.", end=" ")
-                    
+
                 if cond3 is False:
-                    print("Guess should be a alphabets.", end=" ")
-                    
+                    print("Guess should be a alphabet.", end=" ")
+
                 elif cond4 is False:
                     print("Guess should be a lowercase.", end=" ")
                 
@@ -87,9 +88,9 @@ if __name__ == '__main__':
             guess = input("Enter another guess: ")
 
             # Updating conditions
-            
-            cond1 = set(guess) & set(guess_list) == set()
-            cond2 = len(guess) ==1  
+
+            cond1 = len(guess) ==1  
+            cond2 = set(guess) & set(guess_list) == set()
             cond3 = guess.isalpha()
             cond4 = guess.islower()
             conditions = [cond1, cond2, cond3, cond4]
@@ -101,26 +102,29 @@ if __name__ == '__main__':
 
     print("""
     Welcome to hangman!
-    You have to guess the secret word with in 10 tries.
-    """)
+    You have to guess the secret-word with in 10 tries.""")
 
 
     secret_word = get_secret_word()
+    print(f"    Secret-word is a {len(secret_word)} letter word.\n")
+    
     guesslist = ""
-    formatter = "\nGuesses left :{:^3}   Word:{:^15}    Guessed:{:<10}"
+    formatter = "\nGuesses left:{:^3}   Word:{:^15}    Guessed:{:<10}"
 
 
     for i in range(10):
-        print(  formatter.format( 10-i, mask_word(secret_word, guesslist),"".join(sorted( set(guesslist) )) )  )
-
-        if secret_word is mask_word(secret_word, guesslist):
-            print("Congratulations!")
-            break
-
-        newguess = input("Enter next guess: ")
+        newguess = input("Enter a guess: ")
         newguess = guess_checker(newguess, guesslist)
 
         guesslist += newguess
+        guessed = "".join(sorted( set(guesslist) ))
 
-    print(f"Too bad! The secret word was '{secret_word}'")
+        print(  formatter.format( 9-i, mask_word(secret_word, guesslist),guessed )  )
+
+        if secret_word is mask_word(secret_word, guesslist):
+            print("\n\nCongratulations!")
+            break
+
+    time.sleep(0.5)    
+    print(f"\nToo bad! The secret word was '{secret_word}'")
 
