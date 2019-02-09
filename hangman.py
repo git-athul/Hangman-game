@@ -50,11 +50,34 @@ def number_of_guesses(guessed):
 
 if __name__ == '__main__':
 
-    def rep_guess(rep_guess, guess_list):
-        while set(rep_guess) & set(guess_list) != set():
-            print("Already guessed", rep_guess)
-            rep_guess = input("Enter another guess:")
-        return rep_guess    
+    # Input conditions
+    def guess_checker(guess, guess_list):
+
+        # No repetitive guesses
+        # guess should not be a set element in guess_list
+        while set(guess) & set(guess_list) != set():
+            print(f"Already guessed '{guess}'", end=" ")
+            guess = input("Enter another guess: ")
+
+        # One letter guesses
+        while len(guess) != 1:
+            print("Enter one letter only.", end=" ")
+            guess = input("Enter another guess: ")
+
+        # Only alphabets
+        while guess.isalpha()==False:
+            print("Enter alphabets only.", end=" ")
+            guess = input("Enter another guess: ")
+
+        # Only lower-case
+        while guess.isupper():
+            print("Enter lower-case only.", end=" ")
+            guess = input("Enter another guess: ")
+
+
+        return guess
+
+    
 
 
     print("""
@@ -70,11 +93,14 @@ if __name__ == '__main__':
 
     for i in range(10):
         print(formatter.format(10-i, mask_word(secret_word, guesslist), guesslist))
+
         if secret_word is mask_word(secret_word, guesslist):
             print("Congratulations!")
             break
+
         newguess = input("Enter next guess: ")
-        rep_guess(newguess, guesslist)
+        guess_checker(newguess, guesslist)
+
         guesslist += newguess
 
     print(f"Too bad! The secret word was '{secret_word}'")
