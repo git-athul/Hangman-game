@@ -42,11 +42,6 @@ def mask_word(s_word,guessed):
 
 
 
-def number_of_guesses(guessed):
-    return len(guessed)
-    
-
-
 # Import-guard / pytest-guard
 
 if __name__ == '__main__':

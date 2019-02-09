@@ -1,10 +1,9 @@
-* [20%]
-1. [X] Select a random word from a dictionary (/usr/share/dict/words) (sudo apt-get install dictionaries-common). This is the secret word.
+1. Select a random word from a dictionary (/usr/share/dict/words) (sudo apt-get install dictionaries-common). This is the secret word.
 2. Present the user with the following information
-   1. [ ] Masked secret word (* for unguessed letters, actual letter for correctly guessed letters)
-   2. [ ] Number of tries left (start with 10)
-   3. [ ] Wrong guesses so far
-3. [ ] Ask user to guess a letter.
-4. [ ] Update the information and goto 2.
-5. [ ] If the user gets the word in less than 10 tries, print "Congratulations!" and quit
-6. [ ] Otherwise, print "Too bad! The secret word was ..." and quit.
+   1. Masked secret word (* for unguessed letters, actual letter for correctly guessed letters)
+   2. Number of tries left (start with 10)
+   3. Guesses so far
+3. Ask user to guess a letter.
+4. Update the information and goto 2.
+5. If the user gets the word in less than 10 tries, print "Congratulations!" and quit
+6. Otherwise, print "Too bad! The secret word was ..." and quit.
