@@ -46,35 +46,54 @@ def number_of_guesses(guessed):
     
 
 
-# pytest guard
+# Import-guard / pytest-guard
 
 if __name__ == '__main__':
 
     # Input conditions
     def guess_checker(guess, guess_list):
+        # If guess makes any condition FALSE, loop runs
 
+
+        cond1 = len(guess) ==1  
+        # One letter guesses 
+        
+        cond2 = set(guess) & set(guess_list) == set()
         # No repetitive guesses
         # guess should not be a set element in guess_list
-        while set(guess) & set(guess_list) != set():
-            print(f"Already guessed '{guess}'", end=" ")
-            guess = input("Enter another guess: ")
 
-        # One letter guesses
-        while len(guess) != 1:
-            print("Enter one letter only.", end=" ")
-            guess = input("Enter another guess: ")
-
+        cond3 = guess.isalpha()
         # Only alphabets
-        while guess.isalpha()==False:
-            print("Enter alphabets only.", end=" ")
-            guess = input("Enter another guess: ")
 
+        cond4 = guess.islower()
         # Only lower-case
-        while guess.isupper():
-            print("Enter lower-case only.", end=" ")
+
+        conditions = [cond1, cond2, cond3, cond4]
+
+        while not all(conditions):
+            if cond1 is False:
+                print("Enter one letter only.", end=" ")
+            else:    
+                if cond2 is False:
+                    print(f"Already guessed '{guess}'.", end=" ")
+                    
+                if cond3 is False:
+                    print("Guess should be a alphabets.", end=" ")
+                    
+                elif cond4 is False:
+                    print("Guess should be a lowercase.", end=" ")
+                
+
             guess = input("Enter another guess: ")
 
-
+            # Updating conditions
+            
+            cond1 = set(guess) & set(guess_list) == set()
+            cond2 = len(guess) ==1  
+            cond3 = guess.isalpha()
+            cond4 = guess.islower()
+            conditions = [cond1, cond2, cond3, cond4]
+            
         return guess
 
     
@@ -88,18 +107,18 @@ if __name__ == '__main__':
 
     secret_word = get_secret_word()
     guesslist = ""
-    formatter = "Guesses left :{:^3}   Word:{:^15}    Guessed:{:<10}"
+    formatter = "\nGuesses left :{:^3}   Word:{:^15}    Guessed:{:<10}"
 
 
     for i in range(10):
-        print(formatter.format(10-i, mask_word(secret_word, guesslist), guesslist))
+        print(  formatter.format( 10-i, mask_word(secret_word, guesslist),"".join(sorted( set(guesslist) )) )  )
 
         if secret_word is mask_word(secret_word, guesslist):
             print("Congratulations!")
             break
 
         newguess = input("Enter next guess: ")
-        guess_checker(newguess, guesslist)
+        newguess = guess_checker(newguess, guesslist)
 
         guesslist += newguess
 
