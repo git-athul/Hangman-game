@@ -37,3 +37,13 @@ def test_mask_word_repetitive():
     masks = ["d**d*oo*", "*a**a*" ,"**een**n*e*n"]
 
     assert all([ hangman.mask_word(words[i], guess[i]) == masks[i] for i in range(len(words)) ])
+
+
+# Counting wrong guesses
+
+def test_wrong_guess():
+    words = ["python", "tigers","whales","elephant"]
+    guess = ["a","u","w","e"]
+    result =["a","u","",""]
+        
+    assert all([ hangman.wrong_guess(words[i],a[i]) == result[i] for i in range(len(words)) ])
