@@ -47,3 +47,9 @@ def test_wrong_guess():
     result =["a","u","",""]
         
     assert all([ hangman.wrong_guess(words[i],guess[i]) == result[i] for i in range(len(words)) ])
+
+
+
+def test_for_congratz():
+    words = ["python", "tigers","whales","elephant"]
+    assert all([ words[i] == hangman.mask_word(words[i], words[i]) for i in range(len(words)) ])

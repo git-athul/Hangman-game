@@ -140,7 +140,7 @@ if __name__ == '__main__':
             print("\n\nCongratulations!")
             break
         else:
-            print(secret_word is {mask_word(secret_word, guesslist)})
+            print(secret_word == {mask_word(secret_word, guesslist)})
 
     time.sleep(0.5)    
     print(f"\nToo bad! The secret word was '{secret_word}'")
