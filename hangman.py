@@ -120,9 +120,10 @@ if __name__ == '__main__':
 
     wrong_guesses = ""
     guesslist = ""
-    formatter = "\nWord:{:^15}    Life:{:^12}   Guessed: {:<10}"
+    formatter = "\nWord: {:^15}    Life:{:^12}   Guessed: {:<10}"
 
-
+    game_won = "no"
+    
     while not len(wrong_guesses) == 6:
         newguess = input("Enter a guess: ")
         # Checking conditions
@@ -136,13 +137,13 @@ if __name__ == '__main__':
 
         print(  formatter.format( mask_word(secret_word, guesslist), life, guessed )  )
 
-        if secret_word is mask_word(secret_word, guesslist):
+        if secret_word == mask_word(secret_word, guesslist):
             print("\n\nCongratulations!")
+            game_won = "yes"
             break
-        else:
-            print(secret_word == {mask_word(secret_word, guesslist)})
 
-    time.sleep(0.5)    
-    print(f"\nToo bad! The secret word was '{secret_word}'")
+    if game_won == "no":
+        time.sleep(0.5)    
+        print(f"\nToo bad! The secret word was '{secret_word}'")
 
     
