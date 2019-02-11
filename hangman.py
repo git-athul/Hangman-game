@@ -43,7 +43,15 @@ def mask_word(s_word,guessed):
     return "".join(mask)
 
 
+# checks whether a guess is right or wrong; and collects wrong guess
+def wrong_guess(s_word,guessed):
+    if set(s_word) & set(guessed) == set(): 
+        return guessed
+    else:
+        return ""
 
+
+    
 # Import-guard / pytest-guard
 
 if __name__ == '__main__':
@@ -104,30 +112,37 @@ if __name__ == '__main__':
 
     print("""
     Welcome to hangman!
-    You have to guess the secret-word with in 10 tries.""")
+    You have to guess the secret-word with in 6 wrong tries.""")
 
 
     secret_word = get_secret_word()
     print(f"    Secret-word is a {len(secret_word)} letter word.\n")
-    
+
+    wrong_guesses = ""
     guesslist = ""
-    formatter = "\nGuesses left:{:^3}   Word:{:^15}    Guessed:{:<10}"
+    formatter = "\nWord:{:^15}    Life:{:^12}   Guessed: {:<10}"
 
 
-    for i in range(10):
+    while not len(wrong_guesses) == 6:
         newguess = input("Enter a guess: ")
         # Checking conditions
         newguess = guess_checker(newguess, guesslist)
+        
+        wrong_guesses += wrong_guess(secret_word,newguess)
+        life = (6 - len(wrong_guesses) )*" \u2665"
 
         guesslist += newguess
         guessed = "".join(sorted( set(guesslist) ))
 
-        print(  formatter.format( 9-i, mask_word(secret_word, guesslist),guessed )  )
+        print(  formatter.format( mask_word(secret_word, guesslist), life, guessed )  )
 
         if secret_word is mask_word(secret_word, guesslist):
             print("\n\nCongratulations!")
             break
+        else:
+            print(secret_word is {mask_word(secret_word, guesslist)})
 
     time.sleep(0.5)    
     print(f"\nToo bad! The secret word was '{secret_word}'")
 
+    

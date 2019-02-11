@@ -46,4 +46,4 @@ def test_wrong_guess():
     guess = ["a","u","w","e"]
     result =["a","u","",""]
         
-    assert all([ hangman.wrong_guess(words[i],a[i]) == result[i] for i in range(len(words)) ])
+    assert all([ hangman.wrong_guess(words[i],guess[i]) == result[i] for i in range(len(words)) ])
