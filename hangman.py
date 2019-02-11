@@ -3,6 +3,7 @@
 import random
 import time
 
+# finds secret_word that satisfies certain conditions
 def get_secret_word(word_file="/usr/share/dict/words"):
     with open(word_file) as f:
         good_words = []
@@ -18,6 +19,7 @@ def get_secret_word(word_file="/usr/share/dict/words"):
     return random.choice(good_words)
 
 
+# finds indices of 'element' from 'string'
 def indices(string,element):
     count = 1
     ind = []
@@ -27,7 +29,7 @@ def indices(string,element):
         count += 1
     return ind
 
-
+# masks letters in 's_word' unless they are in 'guessed'
 def mask_word(s_word,guessed):
     mask = []
     for i in range(len(s_word)):
@@ -48,10 +50,10 @@ if __name__ == '__main__':
 
     # Input conditions
     def guess_checker(guess, guess_list):
-        # If guess makes any condition FALSE, loop runs
+        # If 'guess' makes any of the condition FALSE, loop runs
 
 
-        cond1 = len(guess) ==1  
+        cond1 = len(guess) == 1  
         # One letter guesses 
         
         cond2 = set(guess) & set(guess_list) == set()
@@ -67,9 +69,11 @@ if __name__ == '__main__':
         conditions = [cond1, cond2, cond3, cond4]
 
         while not all(conditions):
+            # Primary condition
             if cond1 is False:
                 print("Enter one letter only.", end=" ")
             else:
+                # Secondary conditions
                 if cond2 is False:
                     print(f"Already guessed '{guess}'.", end=" ")
 
@@ -82,6 +86,7 @@ if __name__ == '__main__':
 
             guess = input("Enter another guess: ")
 
+            
             # Updating conditions
 
             cond1 = len(guess) ==1  
@@ -89,6 +94,8 @@ if __name__ == '__main__':
             cond3 = guess.isalpha()
             cond4 = guess.islower()
             conditions = [cond1, cond2, cond3, cond4]
+
+            # Loops runs until all the conditions are satisfied
             
         return guess
 
@@ -109,6 +116,7 @@ if __name__ == '__main__':
 
     for i in range(10):
         newguess = input("Enter a guess: ")
+        # Checking conditions
         newguess = guess_checker(newguess, guesslist)
 
         guesslist += newguess

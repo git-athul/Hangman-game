@@ -16,13 +16,14 @@ def test_secret_word_no_proper_nouns():
     assert all(hangman.get_secret_word("./test_data/3.words") == "policeman" for _ in range(100))
 
 
-# 1. Masking entire word when not guessed.
-# 2. Unmasking entire word when fully guessed.
-# 3. Unmasking for words with repetitive letters. Not masking for wrong guesses.
+# 1. Masks entire word when not guessed.
+# 2. Unmasks entire word when fully guessed.
+# 3. Unmasks for words with repetitive letters.
+#    Do not masks for wrong guesses.
     
 def test_mask_word():
     word = "gangman"
-    guess = " "
+    guess = ""
     assert hangman.mask_word(word, guess) == "*******"
 
 def test_mask_word_guessed():
