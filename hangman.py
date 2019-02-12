@@ -32,7 +32,7 @@ def indices(string,element):
 # masks letters in 's_word' unless they are in 'guessed'
 def mask_word(s_word,guessed):
     mask = []
-    for i in range(len(s_word)):
+    for i in s_word:
         mask.append("*")
         
     for i in guessed:
@@ -44,32 +44,32 @@ def mask_word(s_word,guessed):
 
 
 
-# checks condition 1: One letter guesses
+# checks input-condition 1: One letter guesses
 def check_cond1(guessed):
     if len(guessed) == 1:
         return "",True
     return "Only a single letter is allowed", False
 
-# checks condition 2: No repetitive guesses
+# checks input-condition 2: No repetitive guesses
 def check_cond2(guessed, guess_list):
     if not guessed in guess_list:
         return "",True
-    return "Already guessed {}".format(guessed), False
+    return "Already guessed '{}'".format(guessed), False
 
-# checks condition 3: Only alphabets
+# checks input-condition 3: Only alphabets
 def check_cond3(guessed):
     if guessed.isalpha():
         return "",True
     return "Only alphabets are allowed", False
 
-# condition 4: changes uppercase to lowercase
+# input-condition 4: changes uppercase to lowercase
 def upper_to_lower(guess):
     if guess.isupper():
         return guess.lower()
     return guess
 
 
-# guess evaluator
+# guess_evaluator: checks all the input-conditions
 def guess_evaluator(guessed, guess_list):
     guessed = upper_to_lower(guessed)
     
@@ -81,72 +81,42 @@ def guess_evaluator(guessed, guess_list):
         return check_cond3(guessed)
     
     return "", True
-        
 
 
-
-
-#__MESS__ >>>>
-
-
-
+# guess_manager: prints string for failed input-condition and asks for new input
 def guess_manager(guessed, guess_list):
-    while not guess_evaluator(guessed, guess_list):
-        string, boo = guess_evaluator(guessed, guess_list)
-        print(string)
+    while not guess_evaluator(guessed, guess_list)[1]:
+        print( guess_evaluator(guessed, guess_list)[0] )
         guessed = input("Enter another guess: ")
-        return guessed
     return guessed    
     
 
+# wrong_guess: returns the number of wrong guesses
+def wrong_guesses(s_word,guess_list):
+    count = 0
+    for i in guess_list:
+        if i not in s_word:
+            count +=1
+    return count
 
 
 
-# checks whether a guess is right or wrong; and collects wrong guess
-def wrong_guess(s_word,guessed):
-    if set(s_word) & set(guessed) == set(): 
-        return guessed
-    else:
-        return ""    
-    
-# Import-guard / pytest-guard
-
-if __name__ == '__main__':
-
-
-
-
-#def main():
-    secret_word = get_secret_word()
-    
-    print("""
-    Welcome to hangman!
-    You have to guess the secret-word with in 6 wrong tries.
-    Secret-word have {} letters.
-    """.format(len(secret_word)) )
-    
-    formatter = "\nWord: {:^15}    Life:{:^12}   Guessed: {:<10}"
-
-    
-
-
-    wrong_guesses = ""
+def playloop(secret_word):
+    formatter = "\nWord: {:^15}    Life:{:<12}   Guessed: {:<10}"
     guesslist = ""
-
     game_won = "no"
-    
-    while not len(wrong_guesses) == 6:
+
+    # Game losses when 6 guesses are wrong
+    while not wrong_guesses(secret_word, guesslist) == 6:
         newguess = input("Enter a guess: ")
-        # Checking conditions
-        newguess = guess_manager(newguess, guesslist)
+        newguess = guess_manager(newguess, guesslist) # Checking conditions
 
-        wrong_guesses += wrong_guess(secret_word,newguess)
-        life = (6 - len(wrong_guesses) )*" \u2665"
+        guesslist += newguess                         # guesslist updates
+        guesslist = "".join(sorted(set(guesslist)))   # sorting guesslist
 
-        guesslist += newguess
-        guessed = "".join(sorted( set(guesslist) ))
-
-        print(  formatter.format( mask_word(secret_word, guesslist), life, guessed )  )
+        life = (6 - wrong_guesses(secret_word,guesslist) )*" \u2665"
+        
+        print(  formatter.format( mask_word(secret_word, guesslist), life, guesslist )  )
 
         if secret_word == mask_word(secret_word, guesslist):
             print("\n\nCongratulations!")
@@ -157,4 +127,19 @@ if __name__ == '__main__':
         time.sleep(0.5)    
         print("\nToo bad! The secret word was '{}'".format(secret_word))
 
+        
+def main():
+    secret_word = get_secret_word()
     
+    print("""
+    Welcome to hangman!
+    You have to guess the secret-word before 6 wrong tries.
+    Secret-word have {} letters.
+    """.format(len(secret_word)) )
+
+    playloop(secret_word)
+
+    
+# import-guard
+if __name__ == '__main__':
+    main()
