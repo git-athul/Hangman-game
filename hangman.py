@@ -83,7 +83,7 @@ if __name__ == '__main__':
             else:
                 # Secondary conditions
                 if cond2 is False:
-                    print(f"Already guessed '{guess}'.", end=" ")
+                    print("Already guessed '{}'.".format(guess), end=" ")
 
                 if cond3 is False:
                     print("Guess should be a alphabet.", end=" ")
@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
 
     secret_word = get_secret_word()
-    print(f"    Secret-word is a {len(secret_word)} letter word.\n")
+    print("    Secret-word is a {} letter word.\n".format(len(secret_word)))
 
     wrong_guesses = ""
     guesslist = ""
@@ -144,6 +144,6 @@ if __name__ == '__main__':
 
     if game_won == "no":
         time.sleep(0.5)    
-        print(f"\nToo bad! The secret word was '{secret_word}'")
+        print("\nToo bad! The secret word was '{}'".format(secret_word))
 
     
