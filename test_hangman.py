@@ -44,6 +44,7 @@ def test_mask_word_repetitive():
 # 1. Condition1:  One letter guesses
 # 2. Condition2:  No repetitive guesses
 # 3. Condition3:  Only alphabets
+# 4. Changes uppercase to lowercase
 
 def test_check_cond1():
     guess =[ "you", "we", "them", "u", "i", "v" ]
@@ -61,7 +62,11 @@ def test_check_cond3():
     result=[False, False, False, True, True, True ]
     assert ([hangman.check_cond3(guess[i]) == result[i] for i in range(len(guess)) ])
 
-
+def test_upper_to_lower():
+    guess = [ "A", "B", "C", "d", "e", "f" ]
+    result= [ "a", "b", "c", "d", "e", "f"]
+    assert ([hangman.upper_to_lower(guess[i]) == result[i] for i in range(len(guess)) ])
+    
 
 
     
