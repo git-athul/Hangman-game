@@ -31,7 +31,6 @@ def indices(string,element):
 
 # masks letters in 's_word' unless they are in 'guessed'
 def mask_word(s_word,guessed):
-    # NKV : Check Pavanan's code
     mask = []
     for i in range(len(s_word)):
         mask.append("*")
@@ -44,48 +43,24 @@ def mask_word(s_word,guessed):
     return "".join(mask)
 
 
+
+# checks condition 1: One letter guesse
+def check_cond1(guessed):
+    if len(guessed) == 1:
+        return True
+    return False
+
 # checks whether a guess is right or wrong; and collects wrong guess
 def wrong_guess(s_word,guessed):
     if set(s_word) & set(guessed) == set(): 
         return guessed
     else:
-        return ""
+        return ""    
 
-def evaluate_guess(secret_word, guesses, ip):
-    """
-    Returns a string describing the input in relation to the current word
-    and a boolean indicating whether a turn was spent
-    """
-    if len(ip) > 1:
-        return "Only single letter guesses", False
-    if not i.islpha():
-        return "Only alphabet", False
-    if ip in guesses:
-        return "Already guessed {}".format(ip), False
-
-    return "", True
-    
-
-
-def play():
-    current_turn = 1:
-    while True:
-        ip = input()
-        st, ut = evluate(ip)
-        if ut:
-            current_turn += 1
-        print (st)
-        if current_turn >= 10:
-            print "the secre word was ..."
-            break
-    
-
-
-
+# guess checker
 def guess_checker(guess, guess_list):
     # If 'guess' makes any of the condition FALSE, loop runs
-    status_string, update_turn = evaluate(...)
-    if update_turn:
+
         
     cond1 = len(guess) == 1  
     # One letter guesses 
