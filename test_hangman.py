@@ -45,35 +45,64 @@ def test_mask_word_repetitive():
 # 2. Condition2:  No repetitive guesses
 # 3. Condition3:  Only alphabets
 # 4. Changes uppercase to lowercase
-# 5. Test for guess_checker
 
 def test_check_cond1():
-    guess =[ "you", "we", "them", "u", "i", "v" ]
-    result=[False, False, False, True, True, True ]
-    assert ([hangman.check_cond1(guess[i]) == result[i] for i in range(len(guess)) ])
+    guess = [ "you", "we", "u", "i", "v" ]
+    result = [("Only a single letter is allowed", False),("Only a single letter is allowed", False), ("",True), ("",True), ("",True)]
+    
+    assert all([hangman.check_cond1(guess[i]) == result[i] for i in range(len(guess)) ])
 
+    
 def test_check_cond2():
-    guess = [ "a", "b", "c", "d", "e", "f"]
+    guess_f = [ "a", "b", "c"]
+    guess_t = ["d", "e", "f"]
     guess_list = "qawbrc"
-    result=[False, False, False, True, True, True ]
-    assert ([hangman.check_cond2(guess[i], guess_list) == result[i] for i in range(len(guess)) ])
 
+    assert all([hangman.check_cond2(guess_t[i], guess_list) == ("",True) for i in range(len(guess_t)) ])
+    assert all([hangman.check_cond2(guess_f[i], guess_list) == ("Already guessed {}".format(guess_f[i]), False) for i in range(len(guess_f)) ])
+
+               
 def test_check_cond3():
-    guess = [ "1", "?", "/", "n", "o", "f"]
-    result=[False, False, False, True, True, True ]
-    assert ([hangman.check_cond3(guess[i]) == result[i] for i in range(len(guess)) ])
+    guess = [ "1", "?", "n", "o", "f"]
+    result=[("Only alphabets are allowed", False),("Only alphabets are allowed", False), ("",True), ("",True), ("",True) ]
+    
+    assert all([hangman.check_cond3(guess[i]) == result[i] for i in range(len(guess)) ])
 
+               
 def test_upper_to_lower():
     guess = [ "A", "B", "C", "d", "e", "f" ]
     result= [ "a", "b", "c", "d", "e", "f"]
-    assert ([hangman.upper_to_lower(guess[i]) == result[i] for i in range(len(guess)) ])
+    assert all([hangman.upper_to_lower(guess[i]) == result[i] for i in range(len(guess)) ])
     
 
-def test_guess_checker():
-    guess = ["awe","z" ,"0", "A", "e", "f"]
+# D. Test for guess_evaluator
+# 1. Check for true outputs
+# 2. Check for cond1 outputs
+# 3. Check for cond2 outputs
+# 4. Check for cond3 outputs
+
+def test_guess_evaluator():
+    guess = ["A", "e", "f"]
     guess_list = "zxy"
-    result=[False, False, False, True, True, True ]
-    assert ([hangman.guess_checker(guess[i], guess_list) == result[i] for i in range(len(guess)) ])
+    result=[("",True), ("",True), ("",True) ]
+    assert all([hangman.guess_evaluator(guess[i], guess_list) == result[i] for i in range(len(guess)) ])
+
+def test_guess_evaluator_cond1():
+    guess1 = [ "wou","sss","123","zy" ]
+    guess_list = "zxy"
+    result = ("Only a single letter is allowed", False)
+    assert all([hangman.guess_evaluator(guess1[i], guess_list) == result for i in range(len(guess1)) ])
+
+def test_guess_evaluator_cond2():    
+    guess2 = [ "x", "z", "y" ]
+    guess_list = "xzy"
+    assert all([hangman.guess_evaluator(guess2[i], guess_list) == ("Already guessed {}".format(guess2[i]), False) for i in range(len(guess2)) ])
+
+def test_guess_evaluator_cond3():
+    guess3 = [ "?","1","#" ]
+    guess_list = "zxy"
+    result = ("Only alphabets are allowed", False)
+    assert all([hangman.guess_evaluator(guess3[i], guess_list) == result for i in range(len(guess3)) ])
 
 
     
