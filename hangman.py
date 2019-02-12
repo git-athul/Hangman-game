@@ -48,25 +48,42 @@ def mask_word(s_word,guessed):
 def check_cond1(guessed):
     if len(guessed) == 1:
         return True
-    return False
+    return "Only a single letter is allowed", False
 
 # checks condition 2: No repetitive guesses
 def check_cond2(guessed, guess_list):
-    if set(guessed) & set(guess_list):
+    if guessed in guess_list:
         return True
-    return False
+    return "Already guessed {}".format(guessed), False
 
 # checks condition 3: Only alphabets
 def check_cond3(guessed):
     if guessed.isalpha():
         return True
-    return False
+    return "Only alphabets are allowed", False
 
 # changes uppercase to lowercase
 def upper_to_lower(guess):
     if guess.isupper():
         return guess.islower()
     return guess
+
+
+# guess checker
+def guess_checker(guessed, guess_list):
+    c1 = check_cond1(guessed)
+    c2 = check_cond2(guessed, guess_list)
+    c3 = check_cond3(guessed)
+    c4 = upper_to_lower(guessed)
+
+    conditions = [c1, c2, c3, c4]
+
+    for i in conditions:
+        if i:
+            return i
+        break
+    return "", True
+        
 
 # checks whether a guess is right or wrong; and collects wrong guess
 def wrong_guess(s_word,guessed):
@@ -75,56 +92,6 @@ def wrong_guess(s_word,guessed):
     else:
         return ""    
 
-# guess checker
-def guess_checker(guess, guess_list):
-    # If 'guess' makes any of the condition FALSE, loop runs
-
-        
-    cond1 = len(guess) == 1  
-    # One letter guesses 
-
-    cond2 = set(guess) & set(guess_list) == set()
-    # No repetitive guesses
-    # guess should not be a set element in guess_list
-
-    cond3 = guess.isalpha()
-    # Only alphabets
-
-    cond4 = guess.islower()
-    # Only lower-case
-
-    conditions = [cond1, cond2, cond3, cond4]
-
-    while not all(conditions):
-        # Primary condition
-        if cond1 is False:
-            print("Enter one letter only.", end=" ")
-        else:
-            # Secondary conditions
-            if cond2 is False:
-                print("Already guessed '{}'.".format(guess), end=" ")
-
-            if cond3 is False:
-                print("Guess should be a alphabet.", end=" ")
-
-            elif cond4 is False:
-                print("Guess should be a lowercase.", end=" ")
-
-
-        guess = input("Enter another guess: ")
-
-
-        # Updating conditions
-
-        cond1 = len(guess) ==1  
-        cond2 = set(guess) & set(guess_list) == set()
-        cond3 = guess.isalpha()
-        cond4 = guess.islower()
-        conditions = [cond1, cond2, cond3, cond4]
-
-        # Loops runs until all the conditions are satisfied
-
-    return guess
 
 
     
