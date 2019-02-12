@@ -51,65 +51,62 @@ def wrong_guess(s_word,guessed):
         return ""
 
 
+def guess_checker(guess, guess_list):
+    # If 'guess' makes any of the condition FALSE, loop runs
+
+    cond1 = len(guess) == 1  
+    # One letter guesses 
+
+    cond2 = set(guess) & set(guess_list) == set()
+    # No repetitive guesses
+    # guess should not be a set element in guess_list
+
+    cond3 = guess.isalpha()
+    # Only alphabets
+
+    cond4 = guess.islower()
+    # Only lower-case
+
+    conditions = [cond1, cond2, cond3, cond4]
+
+    while not all(conditions):
+        # Primary condition
+        if cond1 is False:
+            print("Enter one letter only.", end=" ")
+        else:
+            # Secondary conditions
+            if cond2 is False:
+                print("Already guessed '{}'.".format(guess), end=" ")
+
+            if cond3 is False:
+                print("Guess should be a alphabet.", end=" ")
+
+            elif cond4 is False:
+                print("Guess should be a lowercase.", end=" ")
+
+
+        guess = input("Enter another guess: ")
+
+
+        # Updating conditions
+
+        cond1 = len(guess) ==1  
+        cond2 = set(guess) & set(guess_list) == set()
+        cond3 = guess.isalpha()
+        cond4 = guess.islower()
+        conditions = [cond1, cond2, cond3, cond4]
+
+        # Loops runs until all the conditions are satisfied
+
+    return guess
+
+
     
 # Import-guard / pytest-guard
 
 if __name__ == '__main__':
 
     # Input conditions
-    def guess_checker(guess, guess_list):
-        # If 'guess' makes any of the condition FALSE, loop runs
-
-
-        cond1 = len(guess) == 1  
-        # One letter guesses 
-        
-        cond2 = set(guess) & set(guess_list) == set()
-        # No repetitive guesses
-        # guess should not be a set element in guess_list
-
-        cond3 = guess.isalpha()
-        # Only alphabets
-
-        cond4 = guess.islower()
-        # Only lower-case
-
-        conditions = [cond1, cond2, cond3, cond4]
-
-        while not all(conditions):
-            # Primary condition
-            if cond1 is False:
-                print("Enter one letter only.", end=" ")
-            else:
-                # Secondary conditions
-                if cond2 is False:
-                    print("Already guessed '{}'.".format(guess), end=" ")
-
-                if cond3 is False:
-                    print("Guess should be a alphabet.", end=" ")
-
-                elif cond4 is False:
-                    print("Guess should be a lowercase.", end=" ")
-                
-
-            guess = input("Enter another guess: ")
-
-            
-            # Updating conditions
-
-            cond1 = len(guess) ==1  
-            cond2 = set(guess) & set(guess_list) == set()
-            cond3 = guess.isalpha()
-            cond4 = guess.islower()
-            conditions = [cond1, cond2, cond3, cond4]
-
-            # Loops runs until all the conditions are satisfied
-            
-        return guess
-
-    
-
-
     print("""
     Welcome to hangman!
     You have to guess the secret-word with in 6 wrong tries.""")
