@@ -44,9 +44,15 @@ def mask_word(s_word,guessed):
 
 
 
-# checks condition 1: One letter guesse
+# checks condition 1: One letter guesses
 def check_cond1(guessed):
     if len(guessed) == 1:
+        return True
+    return False
+
+# checks condition 2: No repetitive guesses
+def check_cond2(guessed, guess_list):
+    if set(guessed) & set(guess_list):
         return True
     return False
 
