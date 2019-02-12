@@ -57,12 +57,16 @@ def check_cond2(guessed, guess_list):
     return False
 
 # checks condition 3: Only alphabets
-def check_cond1(guessed):
-    if guessed.isaplha():
+def check_cond3(guessed):
+    if guessed.isalpha():
         return True
     return False
 
-
+# changes uppercase to lowercase
+def upper_to_lower(guess):
+    if guess.isupper():
+        return guess.islower()
+    return guess
 
 # checks whether a guess is right or wrong; and collects wrong guess
 def wrong_guess(s_word,guessed):
