@@ -42,11 +42,19 @@ def test_mask_word_repetitive():
 
 # C. Checking inputs
 # 1. Condition1:  One letter guesses
+# 2. Condition2:  No repetitive guesses
 
 def test_check_cond1():
     guess =[ "you", "we", "them", "u", "i", "v" ]
     result=[False, False, False, True, True, True ]
     assert ([hangman.check_cond1(guess[i]) == result[i] for i in range(len(guess)) ])
+
+def test_check_cond2():
+    guess = [ "a", "b", "c", "d", "e", "f"]
+    guess_list = "qawbrc"
+    result=[False, False, False, True, True, True ]
+    assert ([hangman.check_cond2(guess[i], guess_list) == result[i] for i in range(len(guess)) ])
+
 
 
     
