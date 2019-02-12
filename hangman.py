@@ -56,6 +56,14 @@ def check_cond2(guessed, guess_list):
         return True
     return False
 
+# checks condition 3: Only alphabets
+def check_cond1(guessed):
+    if guessed.isaplha():
+        return True
+    return False
+
+
+
 # checks whether a guess is right or wrong; and collects wrong guess
 def wrong_guess(s_word,guessed):
     if set(s_word) & set(guessed) == set(): 
